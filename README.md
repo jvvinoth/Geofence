@@ -15,7 +15,11 @@ Application activity should provide controls to configure the geofence area and 
 - If user connected with Wifi, app will consider user still within this region.
 - If user Off/Disconnected from wifi & moved 100 meter away from configured coordinates means, it will tell that "user not in region". 
 
-Note: For now connected Wifi getting from default device settings. We can configure specific Wifi inside the app & can detect if connected wifi is same with configured Wifi in app(SSID).
+
+
+Notes: 
+1. For now connected Wifi getting from default device settings. We can configure specific Wifi inside the app & can detect if connected wifi is same with configured Wifi in app(SSID).
+2. For wifi changing observer on real time, your bundle identifier need to be enable some services such as (Access WiFi Information, Wireless Accessory Configuration)
 ====
 
 
