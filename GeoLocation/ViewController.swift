@@ -63,11 +63,13 @@ class ViewController: UIViewController {
         
         switch status {
         case .notDetermined:
+            setUserDefaults(latitude: 0.0, longtitude: 0.0, keyOne: "current_lat", keyTwo: "current_long")
             locationMgr.requestWhenInUseAuthorization()
             locationMgr.requestAlwaysAuthorization()
             return
             
         case .denied, .restricted:
+            setUserDefaults(latitude: 0.0, longtitude: 0.0, keyOne: "current_lat", keyTwo: "current_long")
             let alert = UIAlertController(title: "Location Services disabled", message: "Please enable Location Services in Settings", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
