@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var wifiNameLabel            : UILabel!
     @IBOutlet weak var wifiIndicatorLabel       : UILabel!
     
-    //MARK: - Private Valriable declaration
+    //MARK: - Private Variable declaration
     private let locationMgr         = CLLocationManager()
     private let reachability        = try! Reachability()
-    private let wifiName            = "TP-Link_5378"
+    private let wifiName            = "VUBS_Home5.0"
     private var lattitude           : Double?
     private var longtitude          : Double?
     private var withinLocation      : Bool = false
@@ -98,11 +98,10 @@ class ViewController: UIViewController {
             return
         }
         
-        let defaults = UserDefaults.standard
-        defaults.set(_lat, forKey: "Lat")
-        defaults.set(_long, forKey: "Long")
-        defaults.synchronize()
+        // Save configured coordinates into user defaults
+        setUserDefaults(latitude: _lat, longtitude: _long, keyOne: "Lat", keyTwo: "Long")
         
+        // Set Geofence for 100 meter
         let geofenceRegionCenter = CLLocationCoordinate2DMake(_lat, _long)
         let geofenceRegion = CLCircularRegion(center: geofenceRegionCenter,
                                               radius: 100,
@@ -146,37 +145,53 @@ class ViewController: UIViewController {
 
     //MARK: - UIButton Action
     @IBAction func configureAction(_ sender: Any) {
-        
+        performSegue(withIdentifier: "toSettings", sender: nil)
     }
     
     //MARK: - Update User Region Status
     func updateStatus() {
         
         if connectedToAuthWifi {
-            determineRegionLabel.text = "Yes beacuse you are connected to Wifi"
+            determineRegionLabel.text       = "Inside region: Yes because you are connected to Wifi"
+            determineRegionLabel.textColor  = .blue
         }
         else if let _ = lattitude, let _ = longtitude {
             
             if withinLocation {
-                determineRegionLabel.text = "Yes beacuse you are within the authorized region"
+                determineRegionLabel.text       = "Inside region: Yes because you are within the configured coordinates."
+                determineRegionLabel.textColor  = .green
             }
             else {
-                determineRegionLabel.text = "No beacuse you are not connected to Wifi and not within the authorized region"
+                determineRegionLabel.text       = "Outside region: No because you are not connected to Wifi and not within the configured coordinates."
+                determineRegionLabel.textColor  = .red
             }
         }
         else {
             determineRegionLabel.text = "Location not configured."
+            determineRegionLabel.textColor  = .red
         }
+    }
+    
+    // MARK: - Save into User Defaults
+    private func setUserDefaults(latitude: Double, longtitude: Double, keyOne: String, keyTwo : String) {
+        let defaults = UserDefaults.standard
+        defaults.set(latitude,   forKey : keyOne)
+        defaults.set(longtitude, forKey : keyTwo)
+        defaults.synchronize()
     }
     
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if let destination = segue.destination as? SettingsViewController {
+            destination.delegate = self
+        }
     }
 
 }
+
+// MARK: - CLLocationManager delegate extension
 
 extension ViewController : CLLocationManagerDelegate {
     
@@ -201,6 +216,10 @@ extension ViewController : CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        
+        if let _ = manager.location?.coordinate.latitude {
+            setUserDefaults(latitude: (manager.location?.coordinate.latitude)!, longtitude: (manager.location?.coordinate.longitude)!, keyOne: "current_lat", keyTwo: "current_long")
+        }
         manager.requestState(for: region)
     }
     
@@ -227,5 +246,16 @@ extension ViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         withinLocation = false
         updateStatus()
+    }
+}
+
+// MARK: - Successful Location configuration extension
+
+extension ViewController : ConfigureLocationDelegate {
+    
+    func updateLocation(lat: String, long: String) {
+        lattitude = Double(lat)
+        longtitude = Double(long)
+        setRegion()
     }
 }

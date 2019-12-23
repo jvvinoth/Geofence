@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xKj-yv-ikV">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -97,11 +98,95 @@
                         <outlet property="determineRegionLabel" destination="aPz-1p-TIi" id="QuD-OP-01c"/>
                         <outlet property="wifiIndicatorLabel" destination="SfW-ZG-3T7" id="90L-rd-NR6"/>
                         <outlet property="wifiNameLabel" destination="wwm-lx-hBR" id="7I8-cC-33e"/>
+                        <segue destination="CuV-hK-MEZ" kind="show" identifier="toSettings" id="RCG-6E-XjJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6m-kb-z06" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="454" y="53"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="vZ2-pq-BbI">
+            <objects>
+                <viewController id="CuV-hK-MEZ" customClass="SettingsViewController" customModule="GeoLocation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="udP-wB-akF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cih-kB-fer">
+                                <rect key="frame" x="20" y="108" width="374" height="301"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="51Z-WK-mr5">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="62.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lattitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVa-HN-iVM">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9P6-h6-bne">
+                                                <rect key="frame" x="0.0" y="28.5" width="374" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0dl-t9-ACw">
+                                        <rect key="frame" x="0.0" y="82.5" width="374" height="62.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longtitude" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zno-bT-PcN">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gfv-zh-dZu">
+                                                <rect key="frame" x="0.0" y="28.5" width="374" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kv3-En-jVT">
+                                        <rect key="frame" x="0.0" y="165" width="374" height="30"/>
+                                        <state key="normal" title="Use Current Location"/>
+                                        <connections>
+                                            <action selector="setAction:" destination="CuV-hK-MEZ" eventType="touchUpInside" id="CFV-FZ-4PX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHM-nT-x2E">
+                                        <rect key="frame" x="0.0" y="215" width="374" height="30"/>
+                                        <state key="normal" title="Configure"/>
+                                        <connections>
+                                            <action selector="longAction:" destination="CuV-hK-MEZ" eventType="touchUpInside" id="bDB-Ji-ALd"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region within 100 meters of the given location will be considered as authorized location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qsw-vW-dXJ">
+                                        <rect key="frame" x="0.0" y="265" width="374" height="36"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cih-kB-fer" firstAttribute="leading" secondItem="7WJ-z0-pk7" secondAttribute="leading" constant="20" id="5pJ-7R-m3M"/>
+                            <constraint firstItem="7WJ-z0-pk7" firstAttribute="trailing" secondItem="cih-kB-fer" secondAttribute="trailing" constant="20" id="Epm-EX-fPT"/>
+                            <constraint firstItem="cih-kB-fer" firstAttribute="top" secondItem="7WJ-z0-pk7" secondAttribute="top" constant="20" id="h24-DH-iQJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7WJ-z0-pk7"/>
+                    </view>
+                    <connections>
+                        <outlet property="latField" destination="9P6-h6-bne" id="XmX-hv-ARU"/>
+                        <outlet property="longField" destination="gfv-zh-dZu" id="ysG-7u-Jz3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9A1-X0-zc7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1242" y="53"/>
         </scene>
     </scenes>
 </document>
